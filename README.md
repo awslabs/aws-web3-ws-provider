@@ -39,7 +39,7 @@ const AWSWebsocketProvider = require('aws-web3-ws-provider');
 const credentials = {
   accessKeyId: process.env.AWS_ACCESS_KEY_ID, 
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-}
+};
 const endpoint = <your Amazon Managed Blockchain WS URL>
 const web3 = new Web3(new AWSWebsocketProvider(endpoint, credentials));
 web3.eth.getNodeInfo().then(console.log).then(() => {
@@ -59,7 +59,7 @@ const AWSWebsocketProvider = require('aws-web3-ws-provider');
 const credentials = {
   accessKeyId: process.env.AWS_ACCESS_KEY_ID, 
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-}
+};
 const endpoint = <your Amazon Managed Blockchain WS URL>
 const baseProvider = new AWSWebsocketProvider(endpoint, credentials));
 let provider = new ethers.providers.WebSocketProvider(baseProvider);

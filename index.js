@@ -12,21 +12,6 @@ const { w3cwebsocket } = require('websocket');
 
 const Ws = w3cwebsocket;
 
-const validateCredentials = (credentials) => {
-  let valid = true;
-
-  //ensure the provided object has property accessKeyId
-  if (!credentials.hasOwnProperty('accessKeyId')) valid = false
-  //ensure the provided object has property secretAccessKey
-  if (!credentials.hasOwnProperty('secretAccessKey')) valid = false
-  //ensure accessKeyId is not undefined or empty
-  if (credentials.accessKeyId == undefined || credentials.accessKeyId === "") valid = false
-  //ensure secretAccessKey is not undefined or empty
-  if (credentials.secretAccessKey == undefined || credentials.secretAccessKey === "") valid = false
-  
-
-  return valid;
-}
 
 module.exports = class AWSWebsocketProvider extends WebsocketProvider {
   
@@ -36,13 +21,12 @@ module.exports = class AWSWebsocketProvider extends WebsocketProvider {
 
   connect() {
     const region = process.env.AWS_DEFAULT_REGION || 'us-east-1';
-    let credentials
-    if (this.clientConfig && this.clientConfig.credentials) {
-      if (!validateCredentials(this.clientConfig.credentials)) throw 'Invalid Credentials: Check that your AWS credentials match the standard format';
-      credentials = new AWS.Credentials(this.clientConfig.credentials);
-    } else {
-      credentials = new AWS.EnvironmentCredentials('AWS');
-    }
+    const creds =
+      'ssmCredentials' in this &&
+      'accessKeyId' in this.ssmCredentials &&
+      'secretAccessKey' in this.ssmCredentials &&
+      this.ssmCredentials;
+    const credentials = (creds && new AWS.Credentials(creds)) || new AWS.EnvironmentCredentials('AWS');
     const host = new URL(this.url).hostname;
     const endpoint = new AWS.Endpoint(`https://${host}/`);
     const req = new AWS.HttpRequest(endpoint, region);
@@ -62,6 +46,4 @@ module.exports = class AWSWebsocketProvider extends WebsocketProvider {
     this.connection = new Ws(this.url, this.protocol, undefined, headers, this.requestOptions, this.clientConfig);
     this._addSocketListeners();
   }
-  
 }
-
