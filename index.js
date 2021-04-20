@@ -6,20 +6,29 @@
 // https://github.com/ethereum/web3.js
 /////////////////////////////////////////////////////
 
-import AWS from 'aws-sdk';
-import WebsocketProvider  from 'web3-providers-ws';
-import pkg from 'websocket';
-const { w3cwebsocket } = pkg;
+const AWS = require('aws-sdk');
+const WebsocketProvider = require('web3-providers-ws');
+const { w3cwebsocket } = require('websocket');
+
 const Ws = w3cwebsocket;
 
-export default class AWSWebsocketProvider extends WebsocketProvider {
-  constructor(endpoint) {
-    super(endpoint);
-  }
+
+module.exports = class AWSWebsocketProvider extends WebsocketProvider {
+  
+  constructor(url, options) {
+    super(url, options)
+  } 
 
   connect() {
     const region = process.env.AWS_DEFAULT_REGION || 'us-east-1';
-    const credentials = new AWS.EnvironmentCredentials('AWS');
+    const creds =
+      'clientConfig' in this &&
+      this.clientConfig !== undefined &&
+      'credentials' in this.clientConfig &&
+      'accessKeyId' in this.clientConfig.credentials &&
+      'secretAccessKey' in this.clientConfig.credentials &&
+      this.clientConfig.credentials;
+    const credentials = (creds && new AWS.Credentials(creds)) || new AWS.EnvironmentCredentials('AWS');
     const host = new URL(this.url).hostname;
     const endpoint = new AWS.Endpoint(`https://${host}/`);
     const req = new AWS.HttpRequest(endpoint, region);
@@ -31,7 +40,6 @@ export default class AWSWebsocketProvider extends WebsocketProvider {
     let headers = {
       'Authorization': req.headers['Authorization'],
       'X-Amz-Date': req.headers['X-Amz-Date'],
-      'NodeId': 'nd-ZNOJJ2XNMJAUFP2MSIRL2N45WI',
       ...this.headers
     }
     if (process.env.AWS_SESSION_TOKEN) {
