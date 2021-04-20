@@ -31,7 +31,7 @@ web3.eth.getNodeInfo().then(console.log).then(() => {
 });
 ```
 
-You may also provide your credentials directly to the constructor arguments of a new instance of AWSWebsocketProvider():
+You may also provide your credentials directly to the constructor arguments of a new instance of AWSWebsocketProvider() using the clientConfig options object:
 ```
 const Web3 = require('web3');
 const AWSWebsocketProvider = require('aws-web3-ws-provider');
@@ -41,7 +41,7 @@ const credentials = {
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 };
 const endpoint = <your Amazon Managed Blockchain WS URL>
-const web3 = new Web3(new AWSWebsocketProvider(endpoint, credentials));
+const web3 = new Web3(new AWSWebsocketProvider(endpoint, { clientConfig: { credentials: credentials }}));
 web3.eth.getNodeInfo().then(console.log).then(() => {
   web3.currentProvider.connection.close();
 });
@@ -61,7 +61,7 @@ const credentials = {
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 };
 const endpoint = <your Amazon Managed Blockchain WS URL>
-const baseProvider = new AWSWebsocketProvider(endpoint, credentials));
+const baseProvider = new AWSWebsocketProvider(endpoint, { clientConfig: { credentials: credentials }}));
 let provider = new ethers.providers.WebSocketProvider(baseProvider);
 ```
 

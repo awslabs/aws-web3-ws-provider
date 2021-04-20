@@ -22,10 +22,12 @@ module.exports = class AWSWebsocketProvider extends WebsocketProvider {
   connect() {
     const region = process.env.AWS_DEFAULT_REGION || 'us-east-1';
     const creds =
-      'ssmCredentials' in this &&
-      'accessKeyId' in this.ssmCredentials &&
-      'secretAccessKey' in this.ssmCredentials &&
-      this.ssmCredentials;
+      'clientConfig' in this &&
+      this.clientConfig !== undefined &&
+      'credentials' in this.clientConfig &&
+      'accessKeyId' in this.clientConfig.credentials &&
+      'secretAccessKey' in this.clientConfig.credentials &&
+      this.clientConfig.credentials;
     const credentials = (creds && new AWS.Credentials(creds)) || new AWS.EnvironmentCredentials('AWS');
     const host = new URL(this.url).hostname;
     const endpoint = new AWS.Endpoint(`https://${host}/`);
