@@ -24,7 +24,7 @@ export AWS_SESSION_TOKEN=...
 ```
 const Web3 = require('web3');
 const AWSWebsocketProvider = require('aws-web3-ws-provider');
-const endpoint = "wss://nd-<your Amazon Managed Blockchain node id>.wss.ethereum.managedblockchain.<your region>.amazonaws.com";
+const endpoint = "wss://nd-NODEID.wss.ethereum.managedblockchain.REGION.amazonaws.com";
 const web3 = new Web3(new AWSWebsocketProvider(endpoint));
 web3.eth.getNodeInfo().then(console.log).then(() => {
   web3.currentProvider.connection.close();
@@ -40,7 +40,7 @@ const credentials = {
   accessKeyId: process.env.AWS_ACCESS_KEY_ID, 
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 };
-const endpoint = "wss://nd-<your Amazon Managed Blockchain node id>.wss.ethereum.managedblockchain.<your region>.amazonaws.com";
+const endpoint = "wss://nd-NODEID.wss.ethereum.managedblockchain.REGION.amazonaws.com";
 const web3 = new Web3(new AWSWebsocketProvider(endpoint, { clientConfig: { credentials: credentials }}));
 web3.eth.getNodeInfo().then(console.log).then(() => {
   web3.currentProvider.connection.close();
@@ -60,7 +60,7 @@ const credentials = {
   accessKeyId: process.env.AWS_ACCESS_KEY_ID, 
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 };
-const endpoint = "wss://nd-<your Amazon Managed Blockchain node id>.wss.ethereum.managedblockchain.<your region>.amazonaws.com";
+const endpoint = "wss://nd-NODEID.wss.ethereum.managedblockchain.REGION.amazonaws.com";
 const baseProvider = new AWSWebsocketProvider(endpoint, { clientConfig: { credentials: credentials }}));
 let provider = new ethers.providers.WebSocketProvider(baseProvider);
 ```
