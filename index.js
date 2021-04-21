@@ -12,9 +12,7 @@ const { w3cwebsocket } = require('websocket');
 
 const Ws = w3cwebsocket;
 
-
 module.exports = class AWSWebsocketProvider extends WebsocketProvider {
-  
   constructor(url, options) {
     super(url, options)
   } 

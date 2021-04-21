@@ -1,6 +1,6 @@
 # aws-web3-ws-provider
 
-This is an npm package that takes care of Signature Version 4 authentication
+This is an NPM package that takes care of Signature Version 4 authentication
 for websocket connections to Ethereum nodes on
 [Amazon Managed Blockchain](https://aws.amazon.com/managed-blockchain/).
 
@@ -31,7 +31,8 @@ web3.eth.getNodeInfo().then(console.log).then(() => {
 });
 ```
 
-You may also provide your credentials directly to the constructor arguments of a new instance of AWSWebsocketProvider() using the clientConfig options object:
+You may also provide your credentials directly to the constructor arguments of a new instance of AWSWebsocketProvider()
+using the clientConfig options object:
 ```
 const Web3 = require('web3');
 const AWSWebsocketProvider = require('aws-web3-ws-provider');
