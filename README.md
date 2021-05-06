@@ -1,4 +1,4 @@
-# aws-web3-ws-provider
+# @aws/web3-ws-provider
 
 This is an NPM package that takes care of Signature Version 4 authentication
 for websocket connections to Ethereum nodes on
@@ -7,7 +7,7 @@ for websocket connections to Ethereum nodes on
 ## Installing
 
 Install and save as a dependency using NPM:
-`npm install aws-web3-ws-provider --save`
+`npm install @aws/web3-ws-provider --save`
 
 ## Example
 
@@ -23,7 +23,7 @@ export AWS_SESSION_TOKEN=...
 
 ```
 const Web3 = require('web3');
-const AWSWebsocketProvider = require('aws-web3-ws-provider');
+const AWSWebsocketProvider = require('@aws/web3-ws-provider');
 const endpoint = 'wss://nd-NODEID.wss.ethereum.managedblockchain.REGION.amazonaws.com';
 const web3 = new Web3(new AWSWebsocketProvider(endpoint));
 web3.eth.getNodeInfo().then(console.log).then(() => {
@@ -35,7 +35,7 @@ You may also provide your credentials directly to the constructor arguments of a
 using the clientConfig options object:
 ```
 const Web3 = require('web3');
-const AWSWebsocketProvider = require('aws-web3-ws-provider');
+const AWSWebsocketProvider = require('@aws/web3-ws-provider');
 
 const credentials = {
   accessKeyId: process.env.AWS_ACCESS_KEY_ID, 
@@ -55,7 +55,7 @@ In your project's root directory, install ethers:
 
 ```
 const ethers = require('ethers');
-const AWSWebsocketProvider = require('aws-web3-ws-provider');
+const AWSWebsocketProvider = require('@aws/web3-ws-provider');
 
 const credentials = {
   accessKeyId: process.env.AWS_ACCESS_KEY_ID, 
